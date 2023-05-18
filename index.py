@@ -9,6 +9,7 @@ browser.maximize_window()
 from bs4 import BeautifulSoup
 soup = BeautifulSoup(browser.page_source, "lxml")
 
+import re
 import time
 
 # 페이지 이동
@@ -17,9 +18,9 @@ res = browser.get(url)
 page_soup = BeautifulSoup(browser.page_source, 'html.parser')
 
 
-# 마지막 페이지 구하기
-last_page = browser.find_element(By.XPATH,'//*[@id="contents"]/div[2]/div[3]/div/div/div[1]/div/a[4]')
-last_page.click()
+# # 마지막 페이지 구하기
+# last_page = browser.find_element(By.XPATH,'//*[@id="contents"]/div[2]/div[3]/div/div/div[1]/div/a[4]')
+# last_page.click()
 
 ## 스크롤
 # 현재 문서 높이를 가져와서 저장
@@ -40,4 +41,10 @@ while True:
     prev_height = curr_height
 
 print("스크롤 완료")
+# time.sleep(2)
+# print('text : ', page_soup.select('a.next2')[0])
+p = re.compile('(?<=movePage\()(.*?)(?=\))')
+text =page_soup.select('a.next2')[0]
+rs = p.findall(str(text))
 
+print(int(rs[0]))
