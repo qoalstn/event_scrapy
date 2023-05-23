@@ -46,7 +46,7 @@ rs = p.findall(str(text))
 last_page = int(rs[0])
 print(last_page)
 
-for i in range(1, 4) :
+for i in range(1, 3) :
     while True:
         # 스크롤을 가장 아래로 내림
         browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
@@ -72,7 +72,7 @@ for i in range(1, 4) :
         price = item.find("span", attrs={"class":"cost"})
         img = item.find("img")['src']
 
-        print(f"제목 : {title}")
+        # print(f"제목 : {title}")
         # print(f"금액 : {price}")
         # print(f"이미지 : {img}")
 
