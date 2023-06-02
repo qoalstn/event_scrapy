@@ -1,6 +1,29 @@
-<form action="http://localhost:8000/store/list" method="get">
-  상품명 : <input type="text" name="name" /><br />
-  가격 : <input type="text" name="price" /><br />
-  이미지 : <input type="file" name="img" /><br />
-  <input type="submit" />
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Template</title>
+  </head>
+  <style>
+    ul {
+      list-style-type: none;
+    }
+    .box {
+      width: 200px;
+      height: 100px;
+      border: 1px solid black;
+      text-align: center;
+    }
+  </style>
+  <body>
+    <h1>My Array:</h1>
+    <ul>
+      {% for item in datas %}
+      <div class="box">
+        <li>{{ item.name }}</li>
+        <li>{{ item.price }}</li>
+        <li>{{ item.image }}</li>
+        {% endfor %}
+      </div>
+    </ul>
+  </body>
+</html>

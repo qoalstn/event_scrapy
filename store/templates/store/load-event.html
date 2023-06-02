@@ -1,0 +1,42 @@
+<html>
+  <style>
+    .wrap {
+      width: 410px;
+      margin: 0 auto;
+    }
+    .box {
+      width: 200px;
+      height: 100px;
+      border: 1px solid black;
+      text-align: center;
+    }
+  </style>
+  <div class="wrap">
+    <input class="box" type="button" value="GS25" id="gs" />
+    <input class="box" type="button" value="CU" />
+    <div id="container"></div>
+  </div>
+  <script>
+    const button = document.querySelector("#gs")
+    button.addEventListener('click',()=>{
+      const url = 'http://localhost:8000/store/gs'
+
+      fetch(url).then(res=>{
+        console.log('res : ', res)
+        if(!res.ok){
+          throw new Error('서버응답실패')
+        }
+        return res.text()//.json()
+      }).then(html=>{
+        const container = document.getElementById('container')
+        container.innerHTML = html;
+      }).catch(err=>{
+        console.error(err)
+      })
+    })
+    {% comment %} function startScrapy(e) {
+      console.log(e.target);
+      const name = document.getElementById("gs");
+    } {% endcomment %}
+  </script>
+</html>

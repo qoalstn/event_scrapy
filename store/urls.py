@@ -3,6 +3,9 @@ from . import views
 
 urlpatterns = [
     path('', views.hello, name='hello'),
+    path('render/', views.crawlEvent, name='event_crawl'),
+    path('<str:name>/',
+         views.saveEvent, name='event_save'),
     path('list/<str:name>/',
          views.showEvent, name='event_list'),
     # path('regist/gs', views.saveEventGS, name='event_regist_gs'),
