@@ -1,9 +1,9 @@
 from django.urls import path
-from . import views
+from .services import views
 
 urlpatterns = [
     path('', views.hello, name='hello'),
-    path('render/', views.crawlEvent, name='event_crawl'),
+    path('crawl/', views.crawlEvent, name='event_crawl'),
     path('<str:name>/',
          views.saveEvent, name='event_save'),
     path('list/<str:name>/',
