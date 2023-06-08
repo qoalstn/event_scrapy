@@ -1,6 +1,44 @@
-<form action="http://localhost:8000/store/list" method="get">
-  상품명ff : <input type="text" name="name" /><br />
-  가격 : <input type="text" name="price" /><br />
-  이미지 : <input type="file" name="img" /><br />
-  <input type="submit" />
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Template</title>
+  </head>
+  <style>
+    #container {
+      width: 100%;
+      height: 100vp;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      background: beige;
+    }
+    #item-list {
+      list-style-type: none;
+    }
+    .box {
+      width: 250px;
+      height: 220px;
+      border: 1px solid black;
+      text-align: center;
+      margin: 10px;
+      padding: 6px;
+      gap: 20px;
+      border-radius: 7px;
+      display: inline-block;
+    }
+  </style>
+  <body>
+    <h1>{{name}} 1+1 Event List</h1>
+    <div class="container">
+      <ul id="item-list">
+        {% for item in datas %}
+        <div class="box">
+          <img src="{{item.img}}" width="165" height="165" />
+          <li>{{ item.name }}</li>
+          <li>{{ item.price }}</li>
+        </div>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

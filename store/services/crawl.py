@@ -46,7 +46,7 @@ def getScrapGSDatas():
     last_page = int(rs[0])
     print(last_page)
 
-    for i in range(1, last_page + 1) :
+    for i in range(1, last_page+1) :
         while True:
             # 스크롤을 가장 아래로 내림
             browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
@@ -74,7 +74,8 @@ def getScrapGSDatas():
         
         for item in items:
             title = item.find("p", attrs={"class":"tit"}).get_text()
-            price = item.find("span", attrs={"class":"cost"}).get_text()
+            price_str = item.find("span", attrs={"class":"cost"}).get_text()
+            price = re.sub(r"[^\d]+","",price_str)
             img = item.find("img")['src']
 
             print(f"page :  {i},제목 : {title}")

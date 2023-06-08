@@ -26,31 +26,17 @@ def saveEvent(request, name):
     print('name :: ', name)
 
     gsDatas = crawl.getScrapGSDatas()
-    current_number = "00001"
+    current_number = "00000"
 
     for i in gsDatas:
         current_number = generate_next_number(current_number)
-        data = ItemGs25(item_idx='G'+current_number, name=name, price=i['price'], img=i['img'])
+        data = ItemGs25(item_idx='G'+current_number, name=i['title'], price=i['price'], img=i['img'])
         print('data : ',data)
         data.save()
-
-
-    # if (request.method == 'POST' and name == 'gs'):
-        
-        # name = request.GET.get('name')
-        # price = request.GET.get('price')
-        # img = request.GET.get('img')
-
-        # data = ItemGs25(item_idx='G00001', name=name, price=price, img=img)
-        # data.save()
-    
-    # datas= [{'name' :'김부각','price' : 3000, 'img':'url1'},
-    #         {'name' :'새우깡','price' : 1500, 'img':'url2'},
-    #         {'name' :'스윙칩','price' : 2000, 'img':'url3'}]
     
     context = {'datas' : gsDatas}
 
-    return render(request, 'store/event.html',context)
+    return render(request, 'store/event-list.html',context)
 
 # 이벤트 리스트
 def showEvent(request, name):
@@ -59,14 +45,22 @@ def showEvent(request, name):
 
     items = []
     if (request.method == 'GET'):
-        if (name == 'gs'):
+        if (name == 'gs25'):
             items.append(getItemsByStore(ItemGs25))
         if (name == 'cu'):
             items.append(getItemsByStore(ItemCu))
 
-    print('items : ', items)
+    # print('items : ', list(items[0]))
 
-    return render(request, 'store/event-list.html')
+    if(len(items) > 0):
+        context = {'datas' : list(items[0]), 'name':name.upper()}
+        
+        return render(request, 'store/event-list.html',context)
+    
+    else:
+        return render(request, 'store/error.html',{'message':'리스트가 없습니다'})
+
+
 
 # 편의점 별 아이템 리스트 가져오기
 def getItemsByStore(model):

@@ -17,26 +17,25 @@
     <div id="container"></div>
   </div>
   <script>
-    const button = document.querySelector("#gs")
-    button.addEventListener('click',()=>{
-      const url = 'http://localhost:8000/store/gs'
+    const button = document.querySelector("#gs");
+    button.addEventListener("click", () => {
+      const url = "http://localhost:8000/store/gs25";
 
-      fetch(url).then(res=>{
-        console.log('res : ', res)
-        if(!res.ok){
-          throw new Error('서버응답실패')
-        }
-        return res.text()//.json()
-      }).then(html=>{
-        const container = document.getElementById('container')
-        container.innerHTML = html;
-      }).catch(err=>{
-        console.error(err)
-      })
-    })
-    {% comment %} function startScrapy(e) {
-      console.log(e.target);
-      const name = document.getElementById("gs");
-    } {% endcomment %}
+      fetch(url)
+        .then((res) => {
+          console.log("res : ", res);
+          if (!res.ok) {
+            throw new Error("서버응답실패");
+          }
+          return res.text(); //.json()
+        })
+        .then((html) => {
+          const container = document.getElementById("container");
+          container.innerHTML = html;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
   </script>
 </html>
