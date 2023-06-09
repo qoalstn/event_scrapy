@@ -8,6 +8,8 @@ urlpatterns = [
          views.saveEvent, name='event_save'),
     path('list/<str:name>/',
          views.showEvent, name='event_list'),
+    path('search/<str:keyword>/',
+         views.searchItem, name='search'),
     # path('regist/gs', views.saveEventGS, name='event_regist_gs'),
     # path('regist/cu', views.saveEventCU, name='event_regist_cu'),
 ]

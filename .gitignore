@@ -1,3 +1,7 @@
 venv/
 
 settings.py
+
+database/
+
+database.db

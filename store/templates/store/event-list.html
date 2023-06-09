@@ -23,13 +23,33 @@
       margin: 10px;
       padding: 6px;
       gap: 20px;
-      border-radius: 7px;
+      border-radius: 8px;
       display: inline-block;
+    }
+    form {
+      text-align: center;
+      width: 100%;
+      margin: auto;
+    }
+    .search-bar {
+      width: 400px;
+      height: 25px;
+      border: 1px solid black;
+      border-radius: 4px;
+    }
+    .submit-button {
+      height: 28px;
+      border: 1px solid black;
+      border-radius: 4px;
     }
   </style>
   <body>
-    <h1>{{name}} 1+1 Event List</h1>
     <div class="container">
+      <h1>{{name}} 1+1 Event List</h1>
+      <form>
+        <input class="search-bar" placeholder="검색어를 입력해주세요" />
+        <input class="submit-button" type="submit" value="검색" />
+      </form>
       <ul id="item-list">
         {% for item in datas %}
         <div class="box">
