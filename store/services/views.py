@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # from ..models import ItemGs25, ItemCu
-from ..services import crawl
+from . import gs_crawl
 from ..database.gs_repository import saveCrawlData, selectAllGS, deleteAllDatas
 from django.http import HttpResponse
 import json
@@ -30,7 +30,7 @@ def saveEvent(request, name):
 
     deleteAllDatas()
 
-    gsDatas = crawl.getScrapGSDatas()
+    gsDatas = gs_crawl.getScrapGSDatas()
     current_number = "00000"
 
     for i in gsDatas:
