@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from ..models import ItemGs25, ItemCu
+# from ..models import ItemGs25, ItemCu
 from ..services import crawl
+from ..database.gs_repository import saveCrawlData, selectAllGS, deleteAllDatas
+from django.http import HttpResponse
+import json
 
 
 def hello(request):
@@ -25,14 +28,14 @@ def saveEvent(request, name):
     print('request :: ', request)
     print('name :: ', name)
 
+    deleteAllDatas()
+
     gsDatas = crawl.getScrapGSDatas()
     current_number = "00000"
 
     for i in gsDatas:
         current_number = generate_next_number(current_number)
-        data = ItemGs25(item_idx='G'+current_number, name=i['title'], price=i['price'], img=i['img'])
-        print('data : ',data)
-        data.save()
+        saveCrawlData( current_number, i['title'], i['price'], i['img'])
     
     context = {'datas' : gsDatas}
 
@@ -46,17 +49,21 @@ def showEvent(request, name):
     items = []
     if (request.method == 'GET'):
         if (name == 'gs25'):
-            items.append(getItemsByStore(ItemGs25))
-        if (name == 'cu'):
-            items.append(getItemsByStore(ItemCu))
+            items.append(selectAllGS())
+        # if (name == 'cu'):
+        #     items.append(getItemsByStore(ItemCu))
 
-    # print('items : ', list(items[0]))
+    print('items : ', list(items))
 
     if(len(items) > 0):
-        context = {'datas' : list(items[0]), 'name':name.upper()}
+        context = {'items' : list(items[0]), 'name':name.upper()}
+
+        #1. 화면 랜더
+        # return render(request, 'store/event-list.html',context) 
         
-        return render(request, 'store/event-list.html',context)
-    
+        #2. json응답
+        json_data = json.dumps(context)  
+        return HttpResponse(json_data, content_type='application/json')    
     else:
         return render(request, 'store/error.html',{'message':'리스트가 없습니다'})
 
