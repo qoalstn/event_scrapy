@@ -37,7 +37,7 @@ def saveEvent(request, name):
         current_number = generate_next_number(current_number)
         saveCrawlData( current_number, i['title'], i['price'], i['img'])
     
-    context = {'datas' : gsDatas}
+    context = {'items' : gsDatas, 'name':name.upper()}
 
     return render(request, 'store/event-list.html',context)
 
