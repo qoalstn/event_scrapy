@@ -54,3 +54,4 @@ def cu_crawl():
     print(sale_product)   
     
     return sale_product   
+cu_crawl()
