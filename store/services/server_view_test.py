@@ -3,15 +3,16 @@ from . import gs_crawl, cu_crawl
 from ..database import gs_repository, cu_repository
 from .util import generate_next_number
 
-# def hello(request):
-#     return render(request, 'hello/hello.html', {})
+# 이벤트 크롤링 수동 버튼 // TODO : 매월초 자동 스케쥴링
+def startCrawl(request):
+    return render(request, 'store/load-event.html',{})
 
 # 이벤트 저장
 def saveEvent(request, name):
     print('request :: ', request, 'name :: ', name)
 
-    current_number = "00000" 
     name = name.lower()
+    current_number = "00000" 
 
     if (request.method == 'GET'):
         if (name == 'gs25'):
@@ -45,7 +46,8 @@ def saveEvent(request, name):
             cu_repository.saveCUCrawlDatas(cuDatas)
             
             context = {'items' : cuDatas}
-            return context
+
+    return render(request, 'store/event-list.html',context)
 
 # 이벤트 리스트
 def showEvent(request, name=None, keyword=None):
@@ -65,9 +67,12 @@ def showEvent(request, name=None, keyword=None):
             else:
                 items['data'] = cu_repository.selectAllCUDatas()
 
+    # print('items : ',  items['data'] )
+
     if(len(items) > 0):
         context = {'items' :  items['data'] , 'name':name.upper()}
-        return context
+        
+        return render(request, 'store/event-list.html',context)
     
     else:
         return render(request, 'store/error.html',{'message':'리스트가 없습니다'})

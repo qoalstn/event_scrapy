@@ -46,7 +46,7 @@ def getScrapGSDatas():
     last_page = int(rs[0])
     print(last_page)
 
-    for i in range(1, 3) :
+    for i in range(1, 2) :
         while True:
             # 스크롤을 가장 아래로 내림
             browser.execute_script("window.scrollTo(0, document.body.scrollHeight)")
