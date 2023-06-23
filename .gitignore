@@ -1,5 +1,6 @@
 venv/
+.venv/
 
-settings.py
+# settings.py
 
 database.db

@@ -31,13 +31,13 @@
       width: 100%;
       margin: auto;
     }
-    .search-bar {
+    #search-bar {
       width: 400px;
       height: 25px;
       border: 1px solid black;
       border-radius: 4px;
     }
-    .submit-button {
+    .search-button {
       height: 28px;
       border: 1px solid black;
       border-radius: 4px;
@@ -45,20 +45,70 @@
   </style>
   <body>
     <div class="container">
-      <h1>{{name}} 1+1 Event List</h1>
+      <h1>{{name}}</h1>
+      <h2>1+1 Event List</h2>
       <form>
         <input class="search-bar" placeholder="검색어를 입력해주세요" />
-        <input class="submit-button" type="submit" value="검색" />
+        <input class="search-button" type="submit" value="검색" />
+        <input class="all-button" type="submit" value="전체" />
       </form>
       <ul id="item-list">
         {% for item in items %}
         <div class="box">
           <img src="{{item.img}}" width="165" height="165" />
           <li>{{ item.title }}</li>
-          <li>{{ item.price }}</li>
+          <li>{{ item.price }}원</li>
         </div>
         {% endfor %}
       </ul>
     </div>
+    <script>
+      let submit = document.querySelector(".submit-button");
+      submit.addEventListener("click", () => {
+        console.log("클릭");
+        let keyword = document.getElementById("search-bar").value;
+        console.log("keyword : ", keyword);
+
+        const url = `http://localhost:8000/store/search/gs25/${keyword}`;
+
+        fetch(url)
+          .then((res) => {
+            console.log("res : ", res);
+            if (!res.ok) {
+              throw new Error("서버응답실패");
+            }
+            return res.text(); //.json()
+          })
+          .then((html) => {
+            const container = document.getElementById("container");
+            //          container.innerHTML = html;
+            var newContainer = document.createElement("div");
+            newContainer.innerHTML = html;
+            container.parentNode.replaceChild(newContainer, container);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
+    </script>
   </body>
+
+  <script>
+    const button = document.querySelector(".search-button");
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const keyword = document.querySelector(".search-bar").value;
+      const name = document.querySelector("h1").textContent;
+
+      window.location.href =
+        "http://localhost:8000/store/sv/list/" + name + "/" + keyword;
+    });
+
+    const all_button = document.querySelector(".all-button");
+    all_button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const name = document.querySelector("h1").textContent;
+      window.location.href = "http://localhost:8000/store/sv/list/" + name;
+    });
+  </script>
 </html>
