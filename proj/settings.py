@@ -10,28 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-import json
-
-# Koyeb 환경설정 파일 (koyeb.json) 로드
-with open('koyeb.json') as f:
-    koyeb_config = json.load(f)
-
-# 환경변수 값 가져오기
-Secret_key = koyeb_config['env']['SECRET_KEY']
-
-print(f"The value of MY_VARIABLE is: {Secret_key}")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = Secret_key
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
