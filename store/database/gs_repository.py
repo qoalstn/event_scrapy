@@ -43,3 +43,20 @@ def selectAllGS():
     conn.close()
 
     return list
+
+## 검색어에 따른 데이터 추출
+def getGSItemsByKeyword(keyword):
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # SELECT 문을 사용하여 이름에 일치하는 레코드 조회
+    cursor.execute('SELECT * FROM item_gs25 WHERE name LIKE ?', ('%' + keyword + '%',))
+    rows = cursor.fetchall()
+
+    list = []
+    for row in rows:
+        list.append({'item_idx':row[0],'title':row[1],'price':row[2],'img':row[3]})    
+
+    conn.close()
+
+    return list
