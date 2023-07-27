@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+# from django.core.management.utils import get_random_secret_key
 import os
 from pathlib import Path
 
@@ -21,10 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'False'
 
 ALLOWED_HOSTS = []
 
@@ -78,10 +80,12 @@ WSGI_APPLICATION = 'proj.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'NAME': os.environ.get('DJANGO_DATABASE_URL', BASE_DIR / 'db.sqlite3'),
 #     }
 # }
 
+# if os.getenv("DJANGO_DATABASE_URL", None) is None:
+#     raise Exception("DJANGO_DATABASE_URL environment variable not defined")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

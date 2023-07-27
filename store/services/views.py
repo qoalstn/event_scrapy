@@ -1,7 +1,9 @@
 from django.shortcuts import render
 # from ..models import ItemGs25, ItemCu
-from . import gs_crawl
-from ..database.gs_repository import saveCrawlData, selectAllGS, deleteAllDatas,getGSItemsByKeyword
+from . import gs_crawl, cu_crawl
+# from ..database.gs_repository import saveCrawlData, selectAllGS, deleteAllDatas,getGSItemsByKeyword
+# import ..database.gs_repository
+from ..database import  cu_repository,gs_repository
 from django.http import HttpResponse
 import json
 
@@ -100,8 +102,8 @@ def searchItem(request, name, keyword):
     print('name : ', name)
 
     items ={}
-    if(name == 'gs25'):
-        items['data'] = getGSItemsByKeyword(keyword)
+    # if(name == 'gs25'):
+        # items['data'] = gs_repository.getGSItemsByKeyword(keyword)
 
     if(len(items['data']) > 0):
         context = {'items' : list(items['data']), 'name':name.upper()}
