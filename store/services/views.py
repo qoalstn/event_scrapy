@@ -40,6 +40,7 @@ def saveEvent(request, name):
 
     current_number = "00000"
     name = name.lower()
+    context = {}
 
     if (request.method == 'GET'):
         if (name == 'gs25'):
@@ -50,11 +51,11 @@ def saveEvent(request, name):
             for i in gsDatas:
                 current_number = generate_next_number(current_number)
                 item_idx = 'G'+current_number
-                title = i['title']
+                name = i['name']
                 price = i['price']
                 img = i['img']
 
-                gs_repository.saveGSCrawlDatas(item_idx, title, price, img)
+                gs_repository.saveGSCrawlDatas(item_idx, name, price, img)
 
             context = {'items': gsDatas}
 
@@ -66,14 +67,15 @@ def saveEvent(request, name):
             for i in cuDatas:
                 current_number = generate_next_number(current_number)
                 item_idx = 'C'+current_number
-                title = i['title']
+                name = i['name']
                 price = i['price']
                 img = i['img']
 
-            cu_repository.saveCUCrawlDatas(cuDatas)
+                cu_repository.saveCUCrawlDatas(item_idx, name, price, img)
 
             context = {'items': cuDatas}
-            return context
+
+    return JsonResponse(context)
 
 # 이벤트 리스트
 

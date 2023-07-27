@@ -14,6 +14,7 @@ headers = {
 
 }
 
+
 def cu_crawl():
     sale_product = []
     for i in range(1, 2):
@@ -48,10 +49,12 @@ def cu_crawl():
             else:
                 sale_src = img['src']
         sale_product.append({'name': sale_name, 'price': sale_price,
-                        'img': sale_src, 'plus': sale_badge})
-        
+                             'img': sale_src, 'plus': sale_badge})
+
         # print(json.dumps(sale_product, ensure_ascii=False, indent=2))
-    print(sale_product)   
-    
-    return sale_product   
+    print(sale_product)
+
+    return sale_product
+
+
 cu_crawl()
