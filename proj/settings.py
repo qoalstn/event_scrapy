@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from django.core.management.utils import get_random_secret_key
+from dotenv import load_dotenv
 import os
 from pathlib import Path
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +31,9 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'False'
 
-ALLOWED_HOSTS = []
+host_1 = os.environ.get('ALLOW_HOST_1')
+host_2 = os.environ.get('ALLOW_HOST_2')
+ALLOWED_HOSTS = [host_1, host_2]
 
 
 # Application definition

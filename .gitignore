@@ -4,3 +4,5 @@ venv/
 # settings.py
 
 database.db
+
+.env

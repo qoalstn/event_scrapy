@@ -4,9 +4,19 @@ from bs4 import BeautifulSoup
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-browser = webdriver.Chrome()
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from webdriver_manager.chrome import ChromeDriverManager
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument("--single-process")
+chrome_options.add_argument("--disable-dev-shm-usage")
+
+browser = webdriver.Chrome(executable_path="C:/Users/seang/Downloads/chromedriver.exe",chrome_options=chrome_options)
+# browser = webdriver.Chrome(executable_path="/usr/bin/chromedriver",chrome_options=chrome_options)
+
 browser.maximize_window()
 
 
@@ -46,7 +56,7 @@ def getScrapGSDatas():
     last_page = int(rs[0])
     print(last_page)
 
-    for i in range(1, 2):
+    for i in range(1, 3):
         while True:
             # 스크롤을 가장 아래로 내림
             browser.execute_script(
@@ -87,7 +97,7 @@ def getScrapGSDatas():
             datas.append({'name': name, 'price': price, 'img': img})
 
         next_page = browser.find_element(
-            By.XPATH, '//*[@id="contents"]/div[2]/div[3]/div/div/div[1]/div/a[3]')
+            By.XPATH, '//*[@id="wrap"]/div[4]/div[2]/div[3]/div/div/div[1]/div/a[3]')
         next_page.click()
 
     return datas
